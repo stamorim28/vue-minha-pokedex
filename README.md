@@ -1,19 +1,10 @@
-# minha_pokedex
+# Projeto - Minha Pokedex
+## Desenvolvido com Vue 3 e Axios
 
-## Project setup
-```
-npm install
-```
+Link - https://minha-pokedex.netlify.app/
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Consumindo a <a href="https://pokeapi.co/" target="_blank">PokeAPI</a> com Axios e com imagens dos pokemons carregadas de forma dinâmica do <a href="https://www.pokemon.com/br/pokedex/" target="_blank">Site Oficial</a>, o projeto foi feito em Vue 3 juntando conteúdos do que já aprendi e venho aprendendo.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+<img width="650" src="https://raw.githubusercontent.com/stamorim28/minha-pokedex/master/print.png" alt="print"/>
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Design inspirado na Pokedex do <a href="https://www.youtube.com/watch?v=Uptu3NrBFBM" target="_blank">Roger Melo</a>.
