@@ -108,6 +108,10 @@ section {
 }
 
 @media (max-width: 596px) {
+  .searchPoke input {
+    width: 90%;
+  }
+  
   .blocoPokemons {
     grid-template-columns: repeat(2, 1fr);
   }
