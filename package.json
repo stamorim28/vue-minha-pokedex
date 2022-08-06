@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
   "dependencies": {
     "aos": "^2.3.4",
-    "axios": "^0.21.2",
+    "axios": "^0.27.2",
     "core-js": "^3.6.5",
+    "pinia": "^2.0.17",
     "vue": "^3.0.0"
   },
   "devDependencies": {
