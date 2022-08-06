@@ -24,7 +24,7 @@
 
     <div class="containerPokemons">
       <ul class="blocoPokemons" data-aos="fade-up" data-aos-duration="2000">
-        <li v-for="pokemon in searchPokemon" :key="pokemon.url">
+        <li v-for="pokemon in searchPokemon" :key="pokemon.name">
           <Pokemon :name="pokemon.name" :url="pokemon.url" />
         </li>
       </ul>
@@ -36,7 +36,8 @@
 <script>
 import "@/assets/css/poketypes.css";
 import Pokemon from "@/components/Pokemon/index";
-import api from "@/api";
+import { usePokedexStore } from "../store";
+import { mapActions, mapState } from 'pinia'
 
 export default {
   name: "App",
@@ -45,31 +46,31 @@ export default {
   },
    data() {
     return {
-      pokemons: [],
       search: "",
     };
   },
   created() {
-    api
-      .get(api.baseURL)
-      .then((res) => {
-        this.pokemons = res.data.results;
-        // console.log(this.pokemons);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      this.fetchPokemons();
   },
   computed: {
+    ...mapState(usePokedexStore, ['pokemons']),
+
+    getPokemons() {
+      console.log(this.pokemons)
+      return this.pokemons.results
+    },
+
     searchPokemon() {
       if (this.search == "" || this.search == " ") {
-        return this.pokemons;
+        return this.getPokemons;
       } else {
-        return this.pokemons.filter((pokemon) => pokemon.name == this.search.toLowerCase());
+        return this.getPokemons.filter((pokemon) => pokemon.name == this.search.toLowerCase());
       }
     },
   },
-  methods: {},
+  methods: {
+    ...mapActions(usePokedexStore, ['fetchPokemons'])
+  }
 }
 </script>
 
