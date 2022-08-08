@@ -25,6 +25,7 @@
     <div class="containerPokemons">
       <ul class="blocoPokemons" data-aos="fade-up" data-aos-duration="2000">
         <li v-for="pokemon in searchPokemon" :key="pokemon.name">
+          <!-- <Pokemon :skills="getPokemons" /> -->
           <Pokemon :name="pokemon.name" :url="pokemon.url" />
         </li>
       </ul>
@@ -44,20 +45,27 @@ export default {
   components: {
     Pokemon
   },
+
    data() {
     return {
       search: "",
     };
   },
-  created() {
-      this.fetchPokemons();
+
+  async created() {
+      // this.fetchPokemons()
+      await Promise.all([this.fetchPokemons(), this.fetchPokemonsSkills()]);
   },
+
   computed: {
-    ...mapState(usePokedexStore, ['pokemons']),
+    ...mapState(usePokedexStore, ['pokemons', 'pokemonsSkills']),
 
     getPokemons() {
-      console.log(this.pokemons)
       return this.pokemons.results
+    },
+
+    getPokemonsSkills() {
+      return this.pokemonsSkills.data
     },
 
     searchPokemon() {
@@ -68,8 +76,13 @@ export default {
       }
     },
   },
+
+  // mounted() {
+  //   console.log(this.getPokemons.map(pokemon => pokemon.name))
+  // },
+
   methods: {
-    ...mapActions(usePokedexStore, ['fetchPokemons'])
+    ...mapActions(usePokedexStore, ['fetchPokemons', 'fetchPokemonsSkills'])
   }
 }
 </script>
