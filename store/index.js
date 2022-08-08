@@ -4,20 +4,34 @@ import axios from "axios"
 // import getters from "./getters";
 // import actions from "./actions";
 
-export const usePokedexStore = defineStore('pokedex', {
-  state: () => ({ pokemons: [] }),
-  actions: {
+const resource = "https://pokeapi.co/api/v2/pokemon";
 
+export const usePokedexStore = defineStore('pokedex', {
+  state: () => ({ pokemons: [], pokemonsSkills: [] }),
+  actions: {
       async fetchPokemons() {
         try {
-          const data = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=151&offset=0")
+            const data = await axios.get(resource + "?limit=151&offset=0")
             this.pokemons = data.data
           }
           catch (error) {
             alert(error)
             console.log(error)
         }
-      }
+      },
+      async fetchPokemonsSkills() {
+        try {
+            const getPokemonUrl = id => (resource + "/" + id)
+            for (let i = 1; i < 150; i++) {
+              this.pokemonsSkills.push(await axios.get(getPokemonUrl(i)))
+            }
+            this.pokemonsSkills = await Promise.all(this.pokemonsSkills)
+          }
+          catch (error) {
+            alert(error)
+            console.log(error)
+        }
+      },
   },
 })
 
