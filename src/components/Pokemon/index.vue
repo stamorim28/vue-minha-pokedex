@@ -1,65 +1,50 @@
 <template>
-  <div :class="`boxPokemon ${pokemon.type1}`">
+  <div :class="`boxPokemon ${getPokemonType1}`">
     <img
-      v-if="pokemon.id < 10"
+      v-if="skills.id < 10"
       :src="
-        `https://assets.pokemon.com/assets/cms2/img/pokedex/full/00${pokemon.id}.png`
+        `https://assets.pokemon.com/assets/cms2/img/pokedex/full/00${skills.id}.png`
       "
-      :alt="name"
+      :alt="skills.name"
     />
     <img
-      v-else-if="pokemon.id < 100"
+      v-else-if="skills.id < 100"
       :src="
-        `https://assets.pokemon.com/assets/cms2/img/pokedex/full/0${pokemon.id}.png`
+        `https://assets.pokemon.com/assets/cms2/img/pokedex/full/0${skills.id}.png`
       "
-      :alt="name"
+      :alt="skills.name"
     />
     <img
       v-else
       :src="
-        `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.id}.png`
+        `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${skills.id}.png`
       "
-      :alt="name"
+      :alt="skills.name"
     />
-    <h1>{{ name }}</h1>
-    <small>{{ pokemon.type2 }}</small>
+    <h1>{{ skills.name }}</h1>
+    <small>{{ getPokemonTypes }}</small>
   </div>
 </template>
 
 <script>
-import api from "@/api";
 
 export default {
   name: "Pokemon",
   props: {
-    name: String,
-    url: String,
-  },
-  data() {
-    return {
-      pokemon: {
-        type1: "",
-        type2: "",
-        id: "",
+    skills: {
+        type: Object,
+        default: () => null,
       },
-    };
   },
+  computed: {
+    getPokemonType1(){
+      return this.skills.types[0].type.name
+    },
 
-  created() {
-    api
-      .get(this.url)
-      .then((res) => {
-        this.pokemon.type1 = res.data.types[0].type.name;
-        this.pokemon.type2 = res.data.types
-          .map((typeInfo) => typeInfo.type.name)
-          .join(" | ");
-        this.pokemon.id = res.data.id;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    getPokemonTypes(){
+      return this.skills.types.map((typeInfo) => typeInfo.type.name).join(" | ");
+    }
   },
-  methods: {},
 };
 </script>
 
