@@ -24,9 +24,8 @@
 
     <div class="containerPokemons">
       <ul class="blocoPokemons" data-aos="fade-up" data-aos-duration="2000">
-        <li v-for="pokemon in searchPokemon" :key="pokemon.name">
-          <!-- <Pokemon :skills="getPokemons" /> -->
-          <Pokemon :name="pokemon.name" :url="pokemon.url" />
+        <li v-for="pokemon in searchPokemon" :key="pokemon.data.name">
+           <Pokemon :skills="pokemon.data" />
         </li>
       </ul>
     </div>
@@ -53,36 +52,27 @@ export default {
   },
 
   async created() {
-      // this.fetchPokemons()
-      await Promise.all([this.fetchPokemons(), this.fetchPokemonsSkills()]);
+      await Promise.all([this.fetchPokemons()]);
   },
 
   computed: {
-    ...mapState(usePokedexStore, ['pokemons', 'pokemonsSkills']),
+    ...mapState(usePokedexStore, ['pokemonsSkills']),
 
     getPokemons() {
-      return this.pokemons.results
-    },
-
-    getPokemonsSkills() {
-      return this.pokemonsSkills.data
+      return this.pokemonsSkills
     },
 
     searchPokemon() {
       if (this.search == "" || this.search == " ") {
         return this.getPokemons;
       } else {
-        return this.getPokemons.filter((pokemon) => pokemon.name == this.search.toLowerCase());
+        return this.getPokemons.filter((pokemon) => pokemon.data.name == this.search.toLowerCase());
       }
     },
   },
 
-  // mounted() {
-  //   console.log(this.getPokemons.map(pokemon => pokemon.name))
-  // },
-
   methods: {
-    ...mapActions(usePokedexStore, ['fetchPokemons', 'fetchPokemonsSkills'])
+    ...mapActions(usePokedexStore, ['fetchPokemons'])
   }
 }
 </script>
