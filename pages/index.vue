@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import "@/assets/css/poketypes.css";
 import Pokemon from "@/components/Pokemon/index";
 import { usePokedexStore } from "../store";
 import { mapActions, mapState } from 'pinia'
@@ -77,7 +76,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 main {
   width: 100%;
   min-height: 100vh;
