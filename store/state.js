@@ -1,6 +1,3 @@
-export default function state(){
-  return {
-    pokemons: [],
-  }
-
+export default {
+  pokemonsSkills: [],
 }

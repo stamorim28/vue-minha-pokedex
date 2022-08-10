@@ -1,9 +1,21 @@
-const resource = "https://pokeapi.co/api/v2/pokemon?limit=151&offset=0";
-export default function action() {
-  return {
-    async fetchPokemons({ commit }){
-      const { data } = await this.$axios.$get(resource);
-      commit("SET_POKEMONS", data);
-    },
-  }
+import axios from "axios"
+
+const resource = "https://pokeapi.co/api/v2/pokemon";
+
+export default {
+  async fetchPokemons() {
+    try {
+        const skill = []
+        const getPokemonUrl = id => (resource + "/" + id)
+        for (let i = 1; i < 152; i++) {
+          skill.push(await axios.get(getPokemonUrl(i)))
+        }
+        const data = await Promise.all(skill)
+        this.pokemonsSkills = data
+      }
+      catch (error) {
+        alert(error)
+        console.log(error)
+    }
+  },
 };
