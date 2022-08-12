@@ -14,173 +14,172 @@
     </div>
 
     <section>
-    <div class="searchPoke">
-      <input
-        type="text"
-        placeholder="Encontre um pokémon..."
-        v-model="search"
-      />
-    </div>
+      <div class="search-poke">
+        <input
+          type="text"
+          placeholder="Encontre um pokémon..."
+          v-model="search"
+        />
+      </div>
 
-    <div class="containerPokemons">
-      <ul class="blocoPokemons" data-aos="fade-up" data-aos-duration="2000">
-        <li v-for="pokemon in searchPokemon" :key="pokemon.data.name">
-           <Pokemon :skills="pokemon.data" />
-        </li>
-      </ul>
-    </div>
-  </section>
+      <div class="container-pokemons">
+        <ul class="bloco-pokemons" data-aos="fade-up" data-aos-duration="2000">
+          <li v-for="pokemon in searchPokemon" :key="pokemon.data.name">
+            <Pokemon :skills="pokemon.data" />
+          </li>
+        </ul>
+      </div>
+    </section>
   </main>
 </template>
 
 <script>
-import "@/assets/css/poketypes.css";
-import Pokemon from "@/components/Pokemon/index";
-import { usePokedexStore } from "../store";
-import { mapActions, mapState } from 'pinia'
+  import Pokemon from "@/components/Pokemon/index";
+  import { usePokedexStore } from "../store";
+  import { mapActions, mapState } from "pinia";
 
-export default {
-  name: "App",
-  components: {
-    Pokemon
-  },
+  export default {
+    name: "App",
+    components: {
+      Pokemon,
+    },
 
-   data() {
-    return {
-      search: "",
-    };
-  },
+    data() {
+      return {
+        search: "",
+      };
+    },
 
-  async created() {
+    async created() {
       await Promise.all([this.fetchPokemons()]);
-  },
-
-  computed: {
-    ...mapState(usePokedexStore, ['pokemonsSkills']),
-
-    getPokemons() {
-      return this.pokemonsSkills
     },
 
-    searchPokemon() {
-      if (this.search == "" || this.search == " ") {
-        return this.getPokemons;
-      } else {
-        return this.getPokemons.filter((pokemon) => pokemon.data.name == this.search.toLowerCase());
-      }
-    },
-  },
+    computed: {
+      ...mapState(usePokedexStore, ["pokemonsSkills"]),
 
-  methods: {
-    ...mapActions(usePokedexStore, ['fetchPokemons'])
-  }
-}
+      getPokemons() {
+        return this.pokemonsSkills;
+      },
+
+      searchPokemon() {
+        if (this.search == "" || this.search == " ") {
+          return this.getPokemons;
+        } else {
+          return this.getPokemons.filter(
+            (pokemon) => pokemon.data.name == this.search.toLowerCase()
+          );
+        }
+      },
+    },
+
+    methods: {
+      ...mapActions(usePokedexStore, ["fetchPokemons"]),
+    },
+  };
 </script>
 
-<style scoped>
-main {
-  width: 100%;
-  min-height: 100vh;
-  padding: 2rem 10%;
-  background: linear-gradient(90deg, #ff7373, #7edb75, #88fbff);
-  background-size: contain;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.github {
-  position: fixed;
-  top: 2%;
-  right: 2%;
-  z-index: 2;
-}
-
-.logo {
-  width: 100%;
-  margin-bottom: 2rem;
-  display: flex;
-  justify-content: center;
-}
-
-.logo img {
-  width: 30vw;
-}
-
-@media (max-width: 596px) {
+<style lang="scss">
   main {
-    padding: 2rem 2.5%;
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem 10%;
+    background: linear-gradient(90deg, $bg-colors);
+    background-size: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
 
   .github {
-    position: absolute;
+    position: fixed;
+    top: 2%;
+    right: 2%;
+    z-index: 2;
   }
 
   .logo {
-    margin-bottom: 0;
+    width: 100%;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+
+    & img {
+      width: 30vw;
+    }
   }
 
-  .logo img {
-    width: 70vw;
-  }
-}
-
-section {
-  width: 100%;
-}
-
-.searchPoke {
-  width: 100%;
-  margin: 2rem 0;
-  display: flex;
-  justify-content: center;
-}
-
-.searchPoke input {
-  width: 70%;
-  padding: 0.75rem 0;
-  border: none;
-  border-bottom: 2px solid #fff;
-  background: transparent;
-  color: #fff;
-}
-
-.searchPoke input::placeholder {
-  color: #fff;
-}
-
-.containerPokemons,
-.blocoPokemons {
-  width: 100%;
-}
-
-.blocoPokemons {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1.5rem;
-}
-
-@media (max-width: 989px) {
-  .blocoPokemons {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-}
-
-@media (max-width: 810px) {
-  .blocoPokemons {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 596px) {
-  .searchPoke input {
-    width: 90%;
+  section {
+    width: 100%;
   }
 
-  .blocoPokemons {
-    grid-template-columns: repeat(2, 1fr);
+  .search-poke {
+    width: 100%;
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+
+    & input {
+      width: 70%;
+      padding: 0.75rem 0;
+      border: none;
+      border-bottom: 2px solid $white;
+      background: transparent;
+      color: $white;
+
+      &::placeholder {
+        color: $white;
+      }
+    }
   }
-}
+
+  .container-pokemons,
+  .bloco-pokemons {
+    width: 100%;
+  }
+
+  .bloco-pokemons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: map-get($media-breakpoints, "lg")) {
+    .bloco-pokemons {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: map-get($media-breakpoints, "lg-m")) {
+    .bloco-pokemons {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: map-get($media-breakpoints, "sm")) {
+    main {
+      padding: 2rem 2.5%;
+    }
+
+    .github {
+      position: absolute;
+    }
+
+    .logo {
+      margin-bottom: 0;
+
+      & img {
+        width: 70vw;
+      }
+    }
+
+    .search-poke input {
+      width: 90%;
+    }
+
+    .bloco-pokemons {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 </style>

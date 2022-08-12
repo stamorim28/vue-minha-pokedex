@@ -1,5 +1,5 @@
 <template>
-  <div :class="`boxPokemon ${getPokemonType1}`">
+  <div :class="`box-pokemon ${getPokemonType1}`">
     <img
       v-if="skills.id < 10"
       :src="imgPokemon('00', skills.id)"
@@ -41,47 +41,45 @@
 
       getPokemonTypes() {
         return this.skills.types
-          .map(typeInfo => typeInfo.type.name)
+          .map((typeInfo) => typeInfo.type.name)
           .join(" | ");
       },
     },
   };
 </script>
 
-<style>
-  .boxPokemon {
+<style lang="scss" scoped>
+  .box-pokemon {
     width: 100%;
     padding: 1rem;
     text-align: center;
     border-radius: 10px;
-    filter: drop-shadow(5px 5px 5px #4d4d4d);
+    filter: drop-shadow(5px 5px 5px $dark-gray);
     cursor: pointer;
-  }
 
-  .boxPokemon img {
-    filter: drop-shadow(5px 5px #fff);
-    transition: all ease 0.3s;
-  }
+    & img {
+      filter: drop-shadow(5px 5px $white);
+      transition: all ease 0.3s;
+    }
 
-  .boxPokemon:hover img {
-    transform: scale(1.1);
-  }
+    &:hover img {
+      transform: scale(1.1);
+    }
 
-  .boxPokemon h1 {
-    text-transform: capitalize;
-    color: #fff;
-    text-shadow: 2px 2px 5px #707070;
-  }
+    & h1 {
+      text-transform: capitalize;
+      color: $white;
+      text-shadow: 2px 2px 5px $gray;
 
-  .boxPokemon small {
-    color: #fff;
-    font-weight: bolder;
-    text-shadow: 2px 2px 5px #707070;
-  }
+      @media (max-width: map-get($media-breakpoints, "sm")) {
+        font-size: 1.25rem;
+      }
+    }
 
-  @media (max-width: 576px) {
-    .boxPokemon h1 {
-      font-size: 1.25rem;
+    & small {
+      color: $white;
+      font-weight: bolder;
+      text-shadow: 2px 2px 5px $gray;
     }
   }
 </style>
