@@ -18,4 +18,19 @@ export default {
         console.log(error)
     }
   },
+
+  async getPokemonsSkills(id) {
+    try {
+      const data = await axios.get(resource + "/" + id)
+        this.getPokemon = data.data
+      }
+      catch (error) {
+        alert(error)
+        console.log(error)
+    }
+  },
+
+  setPokemon(data){
+    this.getPokemon = data
+  }
 };
