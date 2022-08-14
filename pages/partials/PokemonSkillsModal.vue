@@ -1,51 +1,117 @@
 <template>
   <transition>
     <section v-if="show">
-      <div class="modal box-pokemon grass">
+      <div :class="`modal box-pokemon ${getPokemon.types[0].type.name}`">
         <div class="modal__up">
           <div class="modal__up--img">
             <img
-              src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
-              alt=""
+              v-if="getPokemon.id < 10"
+              :src="imgPokemon('00', getPokemon.id)"
+              :alt="getPokemon.name"
+            />
+            <img
+              v-else-if="getPokemon.id < 100"
+              :src="imgPokemon('0', getPokemon.id)"
+              :alt="getPokemon.name"
+            />
+            <img
+              v-else
+              :src="imgPokemon('', getPokemon.id)"
+              :alt="getPokemon.name"
             />
           </div>
-          <h1>#1 Bulbasaur</h1>
+          <h1>{{ getPokemon.name + " " + "#" + getPokemon.id }}</h1>
         </div>
         <div class="modal__down">
           <div class="modal__down--body">
             <div>
               <span> height </span>
-              <h3>0.7 m</h3>
+              <h3>{{ getHeight }} m</h3>
             </div>
             <div>
               <span> weight </span>
-              <h3>6.9 kg</h3>
+              <h3>{{ getWeight }} kg</h3>
             </div>
           </div>
           <div class="modal__down--abilities">
             <div>
               <span> abilities </span>
-              <h2>Overgrow</h2>
+              <div v-for="pokemon in getAbilities" :key="pokemon.url">
+                <h3>{{ pokemon.ability.name }}</h3>
+              </div>
             </div>
           </div>
           <div class="modal__down--types">
             <p>types</p>
-            <div class="grass">
-              <h3>grass</h3>
-            </div>
-            <div class="poison">
-              <h3>poison</h3>
+            <div v-for="pokemon in getTypes" :key="pokemon.url">
+              <div :class="pokemon.type.name">
+                <h3>{{ pokemon.type.name }}</h3>
+              </div>
             </div>
           </div>
         </div>
-        <!-- <div class="x-icon" @click="show = !show" @click="$emit='close'"> -->
-        <div class="x-icon" @click="$emit='emitClick'">
+        <div class="x-icon" @click="show = !show">
           <img src="../../public/img/x-mark-24.png" alt="x-icon" />
         </div>
       </div>
     </section>
   </transition>
 </template>
+
+<script>
+  import { usePokedexStore } from "../../store";
+  import { mapState, mapActions } from "pinia";
+
+  export default {
+    name: "pokemon-skills-modal",
+
+    data() {
+      return {
+        show: true,
+        imgPokemon: (n, id) =>
+          "https://assets.pokemon.com/assets/cms2/img/pokedex/full/" +
+          n +
+          id +
+          ".png",
+      };
+    },
+
+    computed: {
+      ...mapState(usePokedexStore, ["getPokemon"]),
+
+      getAbilities() {
+        return this.getPokemon.abilities.filter((abi) => abi.ability);
+      },
+      getTypes() {
+        return this.getPokemon.types.filter((types) => types.type);
+      },
+      getHeight(){
+        let height = this.getPokemon.height.toString()
+        if(height.length >= 1){
+          return height / 10
+        } else if (height.length > 2) {
+          return height / 100
+        }
+      },
+      getWeight(){
+        let weight = this.getPokemon.weight.toString()
+        if(weight.length > 1){
+          return weight / 10
+        } else if (weight.length > 2) {
+          return weight / 100
+        }
+      }
+    },
+
+    async created() {
+      await this.getPokemonsSkills(this.getPokemon.id);
+    },
+
+    methods: {
+      ...mapActions(usePokedexStore, ["getPokemonsSkills"]),
+    },
+  };
+</script>
 
 <style lang="scss" scoped>
   section {
@@ -60,6 +126,10 @@
     background-color: rgba($color: $black, $alpha: 0.5);
     z-index: 1;
 
+    .box-pokemon {
+      cursor: auto;
+    }
+
     .modal {
       width: 100%;
       max-width: 620px;
@@ -69,8 +139,6 @@
       justify-content: space-between;
       flex-direction: column;
       position: relative;
-      // background-color: #30a7d7;
-      // background: $white;
 
       .x-icon {
         position: absolute;
@@ -90,8 +158,6 @@
           width: 250px;
           height: 250px;
           border-radius: 50%;
-          // border: 5px solid $white;
-          // left: 2%;
         }
       }
 
@@ -99,7 +165,7 @@
         width: 100%;
         height: 35%;
         padding: 1.5rem 5%;
-        background: #313131;
+        background: $dark-black;
         border-radius: 10px;
         display: flex;
         justify-content: space-around;
@@ -112,12 +178,18 @@
           }
         }
 
+        &--abilities {
+          & div h3{
+            text-transform: capitalize;
+          }
+        }
+
         &--types {
           & p {
             margin-bottom: 0.5rem;
           }
 
-          & div {
+          & div div {
             margin-bottom: 0.75rem;
             padding: 0.35rem;
             border-radius: 10px;
@@ -128,6 +200,10 @@
           }
         }
       }
+    }
+
+    .x-icon {
+      cursor: pointer;
     }
   }
 </style>
