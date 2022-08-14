@@ -48,7 +48,7 @@
   };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .box-pokemon {
     width: 100%;
     padding: 1rem;
