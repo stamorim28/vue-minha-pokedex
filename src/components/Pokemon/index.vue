@@ -14,7 +14,6 @@
 
     <h1>{{ skills.name }}</h1>
     <small>#{{ skills.id }}</small>
-    <!-- <small>{{ getPokemonTypes }}</small> -->
   </div>
 </template>
 
