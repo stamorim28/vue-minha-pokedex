@@ -159,12 +159,16 @@
           height: 250px;
           border-radius: 50%;
         }
+
+        & h1 {
+          font-size: 2rem;
+        }
       }
 
       &__down {
         width: 100%;
         height: 35%;
-        padding: 1.5rem 5%;
+        padding: 1.25rem 2%;
         background: $dark-black;
         border-radius: 10px;
         display: flex;
