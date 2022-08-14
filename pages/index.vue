@@ -1,40 +1,53 @@
 <template>
-  <main>
-    <div class="github">
-      <a
-        href="https://github.com/stamorim28"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img src="../public/img/gh.png" alt="github" />
-      </a>
-    </div>
-    <div class="logo">
-      <img src="../public/img/poke_logo.svg" alt="logo" loading="lazy" />
-    </div>
-
-    <section>
-      <div class="search-poke">
-        <input
-          type="text"
-          placeholder="Encontre um pokémon..."
-          v-model="search"
-        />
+  <div>
+    <main>
+      <div class="github">
+        <a
+          href="https://github.com/stamorim28"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="../public/img/gh.png" alt="github" />
+        </a>
+      </div>
+      <div class="logo">
+        <img src="../public/img/poke_logo.svg" alt="logo" loading="lazy" />
       </div>
 
-      <div class="container-pokemons">
-        <ul class="bloco-pokemons" data-aos="fade-up" data-aos-duration="2000">
-          <li v-for="pokemon in searchPokemon" :key="pokemon.data.name">
-            <Pokemon :skills="pokemon.data" />
-          </li>
-        </ul>
-      </div>
-    </section>
-  </main>
+      <section>
+        <div class="search-poke">
+          <input
+            type="text"
+            placeholder="Encontre um pokémon..."
+            v-model="search"
+          />
+        </div>
+
+        <div class="container-pokemons">
+          <ul
+            class="bloco-pokemons"
+            data-aos="fade-up"
+            data-aos-duration="2000"
+          >
+            <li v-for="pokemon in searchPokemon" :key="pokemon.data.name">
+              <Pokemon
+                @click="handleModal(pokemon.data)"
+                :skills="pokemon.data"
+              />
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+    <transition>
+      <PokemonSkillsModal v-if="show" />
+    </transition>
+  </div>
 </template>
 
 <script>
   import Pokemon from "@/components/Pokemon/index";
+  import PokemonSkillsModal from "./partials/PokemonSkillsModal";
   import { usePokedexStore } from "../store";
   import { mapActions, mapState } from "pinia";
 
@@ -42,11 +55,13 @@
     name: "App",
     components: {
       Pokemon,
+      PokemonSkillsModal,
     },
 
     data() {
       return {
         search: "",
+        show: false,
       };
     },
 
@@ -55,10 +70,14 @@
     },
 
     computed: {
-      ...mapState(usePokedexStore, ["pokemonsSkills"]),
+      ...mapState(usePokedexStore, ["pokemonsSkills", "getPokemon"]),
 
       getPokemons() {
         return this.pokemonsSkills;
+      },
+
+      getPokemonSkills(){
+        return this.getPokemon
       },
 
       searchPokemon() {
@@ -73,7 +92,16 @@
     },
 
     methods: {
-      ...mapActions(usePokedexStore, ["fetchPokemons"]),
+      ...mapActions(usePokedexStore, ["fetchPokemons", "setPokemon"]),
+
+      showModal() {
+        this.show = !this.show;
+      },
+
+      handleModal(poke) {
+        this.showModal();
+        this.setPokemon(poke)
+      },
     },
   };
 </script>
@@ -181,5 +209,15 @@
     .bloco-pokemons {
       grid-template-columns: repeat(2, 1fr);
     }
+  }
+
+  .v-enter-active,
+  .v-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  .v-enter-from,
+  .v-leave-to {
+    opacity: 0;
   }
 </style>
