@@ -46,3 +46,88 @@
     </section>
   </transition>
 </template>
+
+<style lang="scss" scoped>
+  section {
+    width: 100%;
+    padding: 2rem 7.5%;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($color: $black, $alpha: 0.5);
+    z-index: 1;
+
+    .modal {
+      width: 100%;
+      max-width: 620px;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
+      position: relative;
+      // background-color: #30a7d7;
+      // background: $white;
+
+      .x-icon {
+        position: absolute;
+        top: 2%;
+        right: 2%;
+
+        img {
+          filter: none;
+        }
+      }
+
+      &__up {
+        display: flex;
+        flex-direction: column;
+        &--img {
+          background: $white;
+          width: 250px;
+          height: 250px;
+          border-radius: 50%;
+          // border: 5px solid $white;
+          // left: 2%;
+        }
+      }
+
+      &__down {
+        width: 100%;
+        height: 35%;
+        padding: 1.5rem 5%;
+        background: #313131;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        color: $white;
+
+        &--body {
+          & div {
+            margin-bottom: 1rem;
+          }
+        }
+
+        &--types {
+          & p {
+            margin-bottom: 0.5rem;
+          }
+
+          & div {
+            margin-bottom: 0.75rem;
+            padding: 0.35rem;
+            border-radius: 10px;
+
+            h3 {
+              text-shadow: 2px 2px 5px $gray;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>
