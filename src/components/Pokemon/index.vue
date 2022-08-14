@@ -11,8 +11,10 @@
       :alt="skills.name"
     />
     <img v-else :src="imgPokemon('', skills.id)" :alt="skills.name" />
+
     <h1>{{ skills.name }}</h1>
-    <small>{{ getPokemonTypes }}</small>
+    <small>#{{ skills.id }}</small>
+    <!-- <small>{{ getPokemonTypes }}</small> -->
   </div>
 </template>
 
@@ -56,10 +58,12 @@
     border-radius: 10px;
     filter: drop-shadow(5px 5px 5px $dark-gray);
     cursor: pointer;
+    position: relative;
 
     & img {
       filter: drop-shadow(5px 5px $white);
       transition: all ease 0.3s;
+      z-index: 3;
     }
 
     &:hover img {
@@ -77,9 +81,14 @@
     }
 
     & small {
+      padding: .25rem;
+      background-color: $dark-black;
+      border-radius: 10px;
       color: $white;
       font-weight: bolder;
-      text-shadow: 2px 2px 5px $gray;
+      position: absolute;
+      top: 2%;
+      left: 2%;
     }
   }
 </style>
