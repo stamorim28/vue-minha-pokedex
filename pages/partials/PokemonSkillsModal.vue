@@ -153,6 +153,7 @@
       &__up {
         display: flex;
         flex-direction: column;
+        align-items: center;
         &--img {
           background: $white;
           width: 250px;
@@ -161,7 +162,7 @@
         }
 
         & h1 {
-          font-size: 2rem;
+          font-size: 1.5rem;
         }
       }
 

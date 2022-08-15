@@ -38,6 +38,7 @@
           </ul>
         </div>
       </section>
+      <button class="button-see-more" v-if="counter < 906" @click="handleSeeMore()">Ver mais</button>
     </main>
     <transition>
       <PokemonSkillsModal v-if="show" />
@@ -70,7 +71,7 @@
     },
 
     computed: {
-      ...mapState(usePokedexStore, ["pokemonsSkills", "getPokemon"]),
+      ...mapState(usePokedexStore, ["pokemonsSkills", "getPokemon", "counter"]),
 
       getPokemons() {
         return this.pokemonsSkills;
@@ -91,11 +92,19 @@
       },
     },
 
+    mounted(){
+      console.log(this.counter)
+    },
+
     methods: {
-      ...mapActions(usePokedexStore, ["fetchPokemons", "setPokemon"]),
+      ...mapActions(usePokedexStore, ["fetchPokemons", "setPokemon", "setPagination"]),
 
       showModal() {
         this.show = !this.show;
+      },
+
+      handleSeeMore(){
+        this.setPagination()
       },
 
       handleModal(poke) {
@@ -208,6 +217,21 @@
 
     .bloco-pokemons {
       grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .button-see-more{
+    margin-top: 2rem;
+    background: $dark-black;
+    border: none;
+    padding: .5rem;
+    color: $white;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover{
+      filter: drop-shadow(5px 5px $white);
+      transition: all ease 0.3s;
     }
   }
 

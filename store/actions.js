@@ -7,7 +7,7 @@ export default {
     try {
         const skill = []
         const getPokemonUrl = id => (resource + "/" + id)
-        for (let i = 1; i < 152; i++) {
+        for (let i = 1; i < this.counter; i++) {
           skill.push(await axios.get(getPokemonUrl(i)))
         }
         const data = await Promise.all(skill)
@@ -32,5 +32,14 @@ export default {
 
   setPokemon(data){
     this.getPokemon = data
+  },
+
+  async setPagination(){
+    if(this.counter >= 900) {
+      this.counter = this.counter + 5
+    } else {
+      this.counter = this.counter + 50
+    }
+    await this.fetchPokemons()
   }
 };
