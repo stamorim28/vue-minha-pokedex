@@ -11,7 +11,12 @@
         </a>
       </div>
       <div class="logo">
-        <img src="../public/img/poke_logo.svg" alt="logo" loading="lazy" />
+        <img
+          src="../public/img/poke_logo.svg"
+          alt="logo"
+          loading="lazy"
+          id="top"
+        />
       </div>
 
       <section>
@@ -38,11 +43,27 @@
           </ul>
         </div>
       </section>
-      <button class="button-see-more" v-if="counter < 906" @click="handleSeeMore()">Ver mais</button>
+      <footer :class="counter >= 906 ? 'center' : ''">
+        <div class="arrow-top">
+          <a href="#top">
+            <div><img src="../public/img/arrow-up-24.png" alt="up" /></div>
+          </a>
+        </div>
+        <button
+          class="button-see-more"
+          v-if="counter < 906"
+          @click="handleSeeMore()"
+        >
+          Ver mais
+        </button>
+      </footer>
     </main>
     <transition>
       <PokemonSkillsModal v-if="show" />
     </transition>
+    <div class="loading" v-if="loading">
+      <img src="../public/img/poke.png" alt="pokeball" />
+    </div>
   </div>
 </template>
 
@@ -63,11 +84,20 @@
       return {
         search: "",
         show: false,
+        loading: false,
       };
     },
 
     async created() {
-      await Promise.all([this.fetchPokemons()]);
+      try {
+        this.loading = !this.loading;
+        await Promise.all([this.fetchPokemons()]);
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      } finally {
+        this.loading = !this.loading;
+      }
     },
 
     computed: {
@@ -77,8 +107,8 @@
         return this.pokemonsSkills;
       },
 
-      getPokemonSkills(){
-        return this.getPokemon
+      getPokemonSkills() {
+        return this.getPokemon;
       },
 
       searchPokemon() {
@@ -92,24 +122,32 @@
       },
     },
 
-    mounted(){
-      console.log(this.counter)
-    },
-
     methods: {
-      ...mapActions(usePokedexStore, ["fetchPokemons", "setPokemon", "setPagination"]),
+      ...mapActions(usePokedexStore, [
+        "fetchPokemons",
+        "setPokemon",
+        "setPagination",
+      ]),
 
       showModal() {
         this.show = !this.show;
       },
 
-      handleSeeMore(){
-        this.setPagination()
+      async handleSeeMore() {
+        try {
+          this.loading = !this.loading;
+          await this.setPagination();
+        } catch (error) {
+          alert(error);
+          console.log(error);
+        } finally {
+          this.loading = !this.loading;
+        }
       },
 
       handleModal(poke) {
         this.showModal();
-        this.setPokemon(poke)
+        this.setPokemon(poke);
       },
     },
   };
@@ -181,6 +219,41 @@
     gap: 1.5rem;
   }
 
+  footer {
+    width: 100%;
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    .arrow-top {
+      width: 100%;
+
+      & a div {
+        width: 50px;
+        height: 50px;
+        background-color: $dark-black;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .button-see-more {
+      background: $dark-black;
+      border: none;
+      padding: 0.5rem;
+      color: $white;
+      font-weight: bold;
+      cursor: pointer;
+
+      &:hover {
+        filter: drop-shadow(5px 5px $white);
+        transition: all ease 0.3s;
+      }
+    }
+  }
+
   @media (max-width: map-get($media-breakpoints, "lg")) {
     .bloco-pokemons {
       grid-template-columns: repeat(4, 1fr);
@@ -220,19 +293,9 @@
     }
   }
 
-  .button-see-more{
-    margin-top: 2rem;
-    background: $dark-black;
-    border: none;
-    padding: .5rem;
-    color: $white;
-    font-weight: bold;
-    cursor: pointer;
-
-    &:hover{
-      filter: drop-shadow(5px 5px $white);
-      transition: all ease 0.3s;
-    }
+  .center {
+    grid-template-columns: none !important;
+    justify-content: center !important;
   }
 
   .v-enter-active,
@@ -243,5 +306,32 @@
   .v-enter-from,
   .v-leave-to {
     opacity: 0;
+  }
+
+  .loading {
+    width: 100%;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($color: $black, $alpha: 0.5);
+    z-index: 5;
+
+    & img {
+      width: 200px;
+      height: 200px;
+      animation: rotation 1s infinite linear;
+    }
+
+    @keyframes rotation {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(359deg);
+      }
+    }
   }
 </style>
