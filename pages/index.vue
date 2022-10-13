@@ -83,7 +83,6 @@
     data() {
       return {
         search: "",
-        show: false,
         loading: false,
       };
     },
@@ -101,7 +100,7 @@
     },
 
     computed: {
-      ...mapState(usePokedexStore, ["pokemonsSkills", "getPokemon", "counter"]),
+      ...mapState(usePokedexStore, ["pokemonsSkills", "getPokemon", "counter", "show"]),
 
       getPokemons() {
         return this.pokemonsSkills;
@@ -127,11 +126,8 @@
         "fetchPokemons",
         "setPokemon",
         "setPagination",
+        "statusModal"
       ]),
-
-      showModal() {
-        this.show = !this.show;
-      },
 
       async handleSeeMore() {
         try {
@@ -146,8 +142,9 @@
       },
 
       handleModal(poke) {
-        this.showModal();
+        this.statusModal();
         this.setPokemon(poke);
+        console.log(this.show)
       },
     },
   };
@@ -158,7 +155,8 @@
     width: 100%;
     min-height: 100vh;
     padding: 2rem 10%;
-    background: linear-gradient(90deg, $bg-colors);
+    // background: linear-gradient(90deg, $bg-colors);
+    background: $bg-red;
     background-size: contain;
     display: flex;
     align-items: center;

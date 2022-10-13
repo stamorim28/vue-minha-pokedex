@@ -50,7 +50,7 @@
             </div>
           </div>
         </div>
-        <div class="x-icon" @click="show = !show">
+        <div class="x-icon" @click="statusModal">
           <img src="../../public/img/x-mark-24.png" alt="x-icon" />
         </div>
       </div>
@@ -67,7 +67,6 @@
 
     data() {
       return {
-        show: true,
         imgPokemon: (n, id) =>
           "https://assets.pokemon.com/assets/cms2/img/pokedex/full/" +
           n +
@@ -77,7 +76,7 @@
     },
 
     computed: {
-      ...mapState(usePokedexStore, ["getPokemon"]),
+      ...mapState(usePokedexStore, ["getPokemon", "show"]),
 
       getAbilities() {
         return this.getPokemon.abilities.filter((abi) => abi.ability);
@@ -108,7 +107,7 @@
     },
 
     methods: {
-      ...mapActions(usePokedexStore, ["getPokemonsSkills"]),
+      ...mapActions(usePokedexStore, ["getPokemonsSkills", "statusModal"]),
     },
   };
 </script>
