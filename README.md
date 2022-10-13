@@ -21,4 +21,12 @@ Outra nova ferramenta é o botão de "ver mais" que agora deu a possibilidade do
 
 Em caso de comparação a branch antiga é a <a href="https://github.com/stamorim28/minha-pokedex/tree/feature/v1.0.0">feature/v1.0.0</a>.
 
-Design inspirado na Pokedex do <a href="https://www.youtube.com/watch?v=Uptu3NrBFBM" target="_blank">Roger Melo</a>.
+## Setup
+```
+npm install
+```
+
+## Server
+```
+npm run dev
+```

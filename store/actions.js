@@ -41,5 +41,9 @@ export default {
       this.counter = this.counter + 50
     }
     await this.fetchPokemons()
+  },
+
+  statusModal(){
+    this.show = !this.show
   }
 };
