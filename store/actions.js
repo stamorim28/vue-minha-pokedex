@@ -19,6 +19,17 @@ export default {
     }
   },
 
+  async searchPokemons(search) {
+    try {
+      const data = await axios.get(resource + "/" + search)
+        this.pokemonsSkills = [data]
+      }
+      catch (error) {
+        alert(error)
+        console.log(error)
+    }
+  },
+
   async getPokemonsSkills(id) {
     try {
       const data = await axios.get(resource + "/" + id)
