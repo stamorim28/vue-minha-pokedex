@@ -25,7 +25,10 @@
             type="text"
             placeholder="Encontre um pokémon..."
             v-model="search"
+            @keyup.enter="handleSearchPokemons(search)"
           />
+
+          <button class="button-see-more" @click="handleSearchPokemons(search)">Buscar</button>
         </div>
 
         <div class="container-pokemons">
@@ -34,7 +37,7 @@
             data-aos="fade-up"
             data-aos-duration="2000"
           >
-            <li v-for="pokemon in searchPokemon" :key="pokemon.data.name">
+            <li v-for="pokemon in getPokemons" :key="pokemon.data.name">
               <Pokemon
                 @click="handleModal(pokemon.data)"
                 :skills="pokemon.data"
@@ -106,19 +109,6 @@
         return this.pokemonsSkills;
       },
 
-      getPokemonSkills() {
-        return this.getPokemon;
-      },
-
-      searchPokemon() {
-        if (this.search == "" || this.search == " ") {
-          return this.getPokemons;
-        } else {
-          return this.getPokemons.filter(
-            (pokemon) => pokemon.data.name == this.search.toLowerCase()
-          );
-        }
-      },
     },
 
     methods: {
@@ -126,7 +116,8 @@
         "fetchPokemons",
         "setPokemon",
         "setPagination",
-        "statusModal"
+        "statusModal",
+        "searchPokemons"
       ]),
 
       async handleSeeMore() {
@@ -141,10 +132,21 @@
         }
       },
 
+      async handleSearchPokemons(value) {
+        try {
+          this.loading = !this.loading;
+          await this.searchPokemons(value.toLowerCase());
+        } catch (error) {
+          alert(error);
+          console.log(error);
+        } finally {
+          this.loading = !this.loading;
+        }
+      },
+
       handleModal(poke) {
         this.statusModal();
         this.setPokemon(poke);
-        console.log(this.show)
       },
     },
   };
@@ -237,7 +239,9 @@
       }
     }
 
-    .button-see-more {
+  }
+
+  .button-see-more {
       background: $dark-black;
       border: none;
       padding: 0.5rem;
@@ -250,7 +254,6 @@
         transition: all ease 0.3s;
       }
     }
-  }
 
   @media (max-width: map-get($media-breakpoints, "lg")) {
     .bloco-pokemons {
