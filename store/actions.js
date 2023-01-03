@@ -21,11 +21,15 @@ export default {
 
   async searchPokemons(search) {
     try {
-      const data = await axios.get(resource + "/" + search)
+      if(search.length > 0) {
+        const data = await axios.get(resource + "/" + search)
         this.pokemonsSkills = [data]
+      } else{
+        await this.fetchPokemons()
       }
+    }
       catch (error) {
-        alert(error)
+        alert("Pokémon não encontrado! 😓")
         console.log(error)
     }
   },
