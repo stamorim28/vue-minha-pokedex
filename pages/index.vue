@@ -11,12 +11,17 @@
         </a>
       </div>
       <div class="logo">
-        <img
-          src="../public/img/poke_logo.svg"
-          alt="logo"
-          loading="lazy"
-          id="top"
-        />
+        <a
+          href="/"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="../public/img/poke_logo.svg"
+            alt="logo"
+            loading="lazy"
+            id="top"
+          />
+        </a>
       </div>
 
       <section>
@@ -140,6 +145,7 @@
           alert(error);
           console.log(error);
         } finally {
+          this.search = ""
           this.loading = !this.loading;
         }
       },
@@ -157,7 +163,6 @@
     width: 100%;
     min-height: 100vh;
     padding: 2rem 10%;
-    // background: linear-gradient(90deg, $bg-colors);
     background: $bg-red;
     background-size: contain;
     display: flex;
@@ -196,14 +201,13 @@
 
     & input {
       width: 70%;
-      padding: 0.75rem 0;
+      padding: 0.75rem;
       border: none;
-      border-bottom: 2px solid $white;
-      background: transparent;
-      color: $white;
+      background: $white;
+      color: $black;
 
       &::placeholder {
-        color: $white;
+        color: $black;
       }
     }
   }
