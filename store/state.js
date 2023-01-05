@@ -1,6 +1,7 @@
 export default {
   pokemonsSkills: [],
   getPokemon: [],
-  counter: 51,
-  show: false
+  show: false,
+  prev: 1,
+  next: 26
 }
