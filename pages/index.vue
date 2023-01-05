@@ -36,6 +36,10 @@
           <button class="button-see-more" @click="handleSearchPokemons(search)">Buscar</button>
         </div>
 
+        <Pagination>
+          <Loading />
+        </Pagination>
+
         <div class="container-pokemons">
           <ul
             class="bloco-pokemons"
@@ -51,32 +55,22 @@
           </ul>
         </div>
       </section>
-      <footer :class="counter >= 906 ? 'center' : ''">
-        <div class="arrow-top">
-          <a href="#top">
-            <div><img src="../public/img/arrow-up-24.png" alt="up" /></div>
-          </a>
-        </div>
-        <button
-          class="button-see-more"
-          v-if="counter < 906"
-          @click="handleSeeMore()"
-        >
-          Ver mais
-        </button>
-      </footer>
+      <Pagination>
+        <Loading />
+      </Pagination>
+      <Loading v-if="loading"/>
     </main>
     <transition>
       <PokemonSkillsModal v-if="show" />
     </transition>
-    <div class="loading" v-if="loading">
-      <img src="../public/img/poke.png" alt="pokeball" />
-    </div>
+
   </div>
 </template>
 
 <script>
   import Pokemon from "@/components/Pokemon/index";
+  import Pagination from "@/components/Pagination/index";
+  import Loading from "@/components/Loading/index";
   import PokemonSkillsModal from "./partials/PokemonSkillsModal";
   import { usePokedexStore } from "../store";
   import { mapActions, mapState } from "pinia";
@@ -86,6 +80,8 @@
     components: {
       Pokemon,
       PokemonSkillsModal,
+      Pagination,
+      Loading
     },
 
     data() {
@@ -108,7 +104,7 @@
     },
 
     computed: {
-      ...mapState(usePokedexStore, ["pokemonsSkills", "getPokemon", "counter", "show"]),
+      ...mapState(usePokedexStore, ["pokemonsSkills", "getPokemon", "counter", "show", "prev", "next"]),
 
       getPokemons() {
         return this.pokemonsSkills;
@@ -120,15 +116,28 @@
       ...mapActions(usePokedexStore, [
         "fetchPokemons",
         "setPokemon",
-        "setPagination",
+        "setPaginationPrev",
+        "setPaginationNext",
         "statusModal",
         "searchPokemons"
       ]),
 
-      async handleSeeMore() {
+      async handlePrev() {
         try {
           this.loading = !this.loading;
-          await this.setPagination();
+          await this.setPaginationPrev();
+        } catch (error) {
+          alert(error);
+          console.log(error);
+        } finally {
+          this.loading = !this.loading;
+        }
+      },
+
+      async handleNext() {
+        try {
+          this.loading = !this.loading;
+          await this.setPaginationNext();
         } catch (error) {
           alert(error);
           console.log(error);
@@ -223,28 +232,6 @@
     gap: 1.5rem;
   }
 
-  footer {
-    width: 100%;
-    margin-top: 2rem;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-
-    .arrow-top {
-      width: 100%;
-
-      & a div {
-        width: 50px;
-        height: 50px;
-        background-color: $dark-black;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-
-  }
-
   .button-see-more {
       background: $dark-black;
       border: none;
@@ -298,11 +285,6 @@
     }
   }
 
-  .center {
-    grid-template-columns: none !important;
-    justify-content: center !important;
-  }
-
   .v-enter-active,
   .v-leave-active {
     transition: opacity 0.5s ease;
@@ -313,30 +295,4 @@
     opacity: 0;
   }
 
-  .loading {
-    width: 100%;
-    min-height: 100vh;
-    position: fixed;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba($color: $black, $alpha: 0.5);
-    z-index: 5;
-
-    & img {
-      width: 200px;
-      height: 200px;
-      animation: rotation 1s infinite linear;
-    }
-
-    @keyframes rotation {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(359deg);
-      }
-    }
-  }
 </style>
