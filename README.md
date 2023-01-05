@@ -15,11 +15,17 @@ Além do código também foi incluído uma modal exibindo os dados do pokémon, 
 
 <img width="850" src="https://raw.githubusercontent.com/stamorim28/minha-pokedex/master/print_2.png" alt="print"/>
 
-Outra nova ferramenta é o botão de "ver mais" que agora deu a possibilidade do projeto exibir todos os pokémons, tirando o limite de antes que era 151, o botão carrega mais 50 pokémons sempre que clicado.
+Houve uma alteração em relação a paginação, que foi subistituído pelo estilo prev/next com foco na melhoria de desempenho e continua exibindo todos os pokémons.
 
 <img width="850" src="https://raw.githubusercontent.com/stamorim28/minha-pokedex/master/print_3.png" alt="print"/>
 
-Em caso de comparação a branch antiga é a <a href="https://github.com/stamorim28/minha-pokedex/tree/feature/v1.0.0">feature/v1.0.0</a>.
+## Ferramenta de busca por requisição 🔍
+
+Foi implementado uma melhoria na busca por pokémons, anteriormente exibindo apenas os pokémons já carregados, agora se tem a possibilidade de buscas todos os pokémons sem necessidade de carregamento prévio.
+
+<img src="https://raw.githubusercontent.com/stamorim28/minha-pokedex/master/print_4.png" alt="print"/>
+
+Em caso de comparação sobre as modificações feitas a branch antiga é a <a href="https://github.com/stamorim28/minha-pokedex/tree/feature/v1.0.0">feature/v1.0.0</a>.
 
 ## Setup
 ```
@@ -30,3 +36,6 @@ npm install
 ```
 npm run dev
 ```
+
+
+_Este projeto vem sendo um laboratório e a cada conhecimento novo adiquirido ele é atualizado. Mais melhorias em breve._
