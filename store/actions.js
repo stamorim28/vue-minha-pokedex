@@ -11,7 +11,6 @@ export default {
           skill.push(await axios.get(getPokemonUrl(i)))
         }
         const data = await Promise.all(skill)
-        console.log(data)
         this.pokemonsSkills = data
       }
       catch (error) {
