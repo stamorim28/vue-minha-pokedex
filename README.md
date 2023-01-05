@@ -1,5 +1,5 @@
 # Projeto - Minha Pokedex
-## Desenvolvido com Vue 3, SASS, Pinia e Axios
+## Desenvolvido com Vue, SASS, Pinia e Axios
 
 Link - https://minha-pokedex-vue.netlify.app/
 
