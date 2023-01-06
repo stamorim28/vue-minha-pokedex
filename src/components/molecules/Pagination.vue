@@ -1,32 +1,21 @@
 <template>
   <div class="pagination">
-    <button
-      class="button-see-more"
-      v-if="prev >= 26"
-      @click="handlePrev()"
-    >
+    <button class="button-see-more" v-if="prev >= 26" @click="handlePrev()">
       Anterior
     </button>
-    <button
-      class="button-see-more"
-      v-if="next < 906"
-      @click="handleNext()"
-    >
+    <button class="button-see-more" v-if="next < 906" @click="handleNext()">
       Próximo
     </button>
   </div>
-  <!-- <Loading v-if="loading"/> -->
-  <slot v-if="loading"/>
+  <slot v-if="loading" />
 </template>
 
 <script>
   import { usePokedexStore } from "../../../store";
   import { mapActions, mapState } from "pinia";
-  import Loading from "../Loading"
 
   export default {
     name: "Pagination",
-    components: {Loading},
 
     data() {
       return {
