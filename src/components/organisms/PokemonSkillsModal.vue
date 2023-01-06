@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="x-icon" @click="statusModal">
-          <img src="../../public/img/x-mark-24.png" alt="x-icon" />
+          <img src="../../../public/img/x-mark-24.png" alt="x-icon" />
         </div>
       </div>
     </section>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-  import { usePokedexStore } from "../../store";
+  import { usePokedexStore } from "../../../store";
   import { mapState, mapActions } from "pinia";
 
   export default {
@@ -84,22 +84,22 @@
       getTypes() {
         return this.getPokemon.types.filter((types) => types.type);
       },
-      getHeight(){
-        let height = this.getPokemon.height.toString()
-        if(height.length >= 1){
-          return height / 10
+      getHeight() {
+        let height = this.getPokemon.height.toString();
+        if (height.length >= 1) {
+          return height / 10;
         } else if (height.length > 2) {
-          return height / 100
+          return height / 100;
         }
       },
-      getWeight(){
-        let weight = this.getPokemon.weight.toString()
-        if(weight.length > 1){
-          return weight / 10
+      getWeight() {
+        let weight = this.getPokemon.weight.toString();
+        if (weight.length > 1) {
+          return weight / 10;
         } else if (weight.length > 2) {
-          return weight / 100
+          return weight / 100;
         }
-      }
+      },
     },
 
     async created() {
@@ -183,7 +183,7 @@
         }
 
         &--abilities {
-          & div h3{
+          & div h3 {
             text-transform: capitalize;
           }
         }
