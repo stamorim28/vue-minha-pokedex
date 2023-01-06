@@ -2,7 +2,7 @@
   <div class="logo">
     <a href="/" rel="noopener noreferrer">
       <img
-        src="../../public/img/poke_logo.svg"
+        src="../../../public/img/poke_logo.svg"
         alt="logo"
         loading="lazy"
         id="top"

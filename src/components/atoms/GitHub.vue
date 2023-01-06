@@ -5,7 +5,7 @@
       target="_blank"
       rel="noopener noreferrer"
     >
-      <img src="../../public/img/gh.png" alt="github" />
+      <img src="../../../public/img/gh.png" alt="github" />
     </a>
   </div>
 </template>

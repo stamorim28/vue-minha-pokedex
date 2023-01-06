@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import { usePokedexStore } from "@/store";
+  import { usePokedexStore } from "../../../store";
   import { mapActions } from "pinia";
 
   export default {
