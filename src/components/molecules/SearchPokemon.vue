@@ -7,9 +7,7 @@
       @keyup.enter="handleSearchPokemons(search)"
     />
 
-    <button class="button-see-more" @click="handleSearchPokemons(search)">
-      Buscar
-    </button>
+    <ButtonSeeMore title="Buscar" @click="handleSearchPokemons(search)" />
   </div>
   <Loading v-if="loading" />
 </template>

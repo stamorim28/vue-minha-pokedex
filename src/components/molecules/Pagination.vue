@@ -1,11 +1,7 @@
 <template>
   <div class="pagination">
-    <button class="button-see-more" v-if="prev >= 26" @click="handlePrev()">
-      Anterior
-    </button>
-    <button class="button-see-more" v-if="next < 906" @click="handleNext()">
-      Próximo
-    </button>
+    <ButtonSeeMore title="Anterior" v-if="prev >= 26" @click="handlePrev()" />
+    <ButtonSeeMore title="Próximo" v-if="next < 906" @click="handleNext()" />
   </div>
   <slot v-if="loading" />
 </template>
