@@ -1,18 +1,19 @@
 # Projeto - Minha Pokedex
 
-## Desenvolvido com Vue, SASS, Pinia e Axios
+## Desenvolvido com Vue 3, SASS, Pinia e Axios
 
 Link - https://minha-pokedex-vue.netlify.app/
 
-Consumindo a <a href="https://pokeapi.co/" target="_blank">PokeAPI</a> e com imagens dos pokemons carregadas de forma dinâmica do <a href="https://www.pokemon.com/br/pokedex/" target="_blank">Site Oficial</a>, o projeto mostra todos os pokémons.
+Consumindo a <a href="https://pokeapi.co/" target="_blank">PokeAPI</a> e com imagens dos pokémons carregadas de forma dinâmica do <a href="https://www.pokemon.com/br/pokedex/" target="_blank">Site Oficial</a>, o projeto mostra todos os pokémons.
 
 <img width="850" src="https://raw.githubusercontent.com/stamorim28/minha-pokedex/master/pictures/print_1.png" alt="print"/>
 
 ## Novas ferramentas e features 👓🍍
 
-Houveram algumas atualizações no projeto que agora inclui o <a href="https://sass-lang.com/" target="_blank">SASS</a> no lugar do antigo CSS e também foi adicionado o <a href="https://pinia.vuejs.org/" target="_blank">Pinia</a> como gerenciador de estado do projeto atuando junto com o <a href="https://axios-http.com/ptbr/docs/intro" target="_blank">Axios</a>. O código foi refatorado e reorganizado.
+Houveram algumas atualizações no projeto que agora inclui o <a href="https://sass-lang.com/" target="_blank">SASS</a> no lugar do antigo CSS e também foi adicionado o <a href="https://pinia.vuejs.org/" target="_blank">Pinia</a> como gerenciador de estado do projeto atuando junto com o <a href="https://axios-http.com/ptbr/docs/intro" target="_blank">Axios</a>.
+O projeto foi reorganizado seguindo os conceitos do <a href="https://vuedose.tips/how-to-structure-a-vue-js-app-using-atomic-design-and-tailwindcss" target="_blank">Atomic Design</a> e toda Options API foi substituída por Composition API.
 
-Além do código também foi incluído uma modal exibindo os dados do pokémon, basta o usuário clicar em um dos cards que a modal exibirá os dados do pokémon referente.
+também foi incluído uma modal exibindo os dados do pokémon, basta o usuário clicar em um dos cards que a modal exibirá os dados do pokémon referente.
 
 <img width="850" src="https://raw.githubusercontent.com/stamorim28/minha-pokedex/master/pictures/print_2.png" alt="print"/>
 
