@@ -1,52 +1,24 @@
 <template>
-  <div :class="`box-pokemon ${getPokemonType1}`">
-    <img
-      v-if="skills.id < 10"
-      :src="imgPokemon('00', skills.id)"
-      :alt="skills.name"
-    />
-    <img
-      v-else-if="skills.id < 100"
-      :src="imgPokemon('0', skills.id)"
-      :alt="skills.name"
-    />
-    <img v-else :src="imgPokemon('', skills.id)" :alt="skills.name" />
-
+  <div :class="`box-pokemon ${getPokemonFirstType}`">
+    <img :src="getImgPokemon" :alt="skills.name" loading="lazy" />
     <h1>{{ skills.name }}</h1>
     <small>#{{ skills.id }}</small>
   </div>
 </template>
 
-<script>
-  export default {
-    name: "Pokemon",
-    props: {
-      skills: {
-        type: Object,
-        default: () => null,
-      },
-    },
-    data() {
-      return {
-        imgPokemon: (n, id) =>
-          "https://assets.pokemon.com/assets/cms2/img/pokedex/full/" +
-          n +
-          id +
-          ".png",
-      };
-    },
-    computed: {
-      getPokemonType1() {
-        return this.skills.types[0].type.name;
-      },
+<script setup>
+  import { computed, ref } from "vue";
 
-      getPokemonTypes() {
-        return this.skills.types
-          .map((typeInfo) => typeInfo.type.name)
-          .join(" | ");
-      },
-    },
-  };
+  const props = defineProps({
+    skills: Object,
+  });
+
+  const skills = ref(props.skills);
+  const getPokemonFirstType = computed(() => skills.value.types[0].type.name);
+
+  const getImgPokemon = computed(() => {
+    return skills.value.sprites.other["official-artwork"].front_default;
+  });
 </script>
 
 <style lang="scss">
@@ -80,7 +52,7 @@
     }
 
     & small {
-      padding: .25rem;
+      padding: 0.25rem;
       background-color: $dark-black;
       border-radius: 10px;
       color: $white;
