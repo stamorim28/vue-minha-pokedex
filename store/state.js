@@ -3,5 +3,5 @@ export default {
   getPokemon: [],
   show: false,
   prev: 1,
-  next: 26
-}
+  next: 26,
+};

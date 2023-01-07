@@ -4,21 +4,7 @@
       <div :class="`modal box-pokemon ${getPokemon.types[0].type.name}`">
         <div class="modal__up">
           <div class="modal__up--img">
-            <img
-              v-if="getPokemon.id < 10"
-              :src="imgPokemon('00', getPokemon.id)"
-              :alt="getPokemon.name"
-            />
-            <img
-              v-else-if="getPokemon.id < 100"
-              :src="imgPokemon('0', getPokemon.id)"
-              :alt="getPokemon.name"
-            />
-            <img
-              v-else
-              :src="imgPokemon('', getPokemon.id)"
-              :alt="getPokemon.name"
-            />
+            <img :src="getImgPokemon" :alt="getPokemon.name" loading="lazy" />
           </div>
           <h1>{{ getPokemon.name + " " + "#" + getPokemon.id }}</h1>
         </div>
@@ -51,65 +37,60 @@
           </div>
         </div>
         <div class="x-icon" @click="statusModal">
-          <img src="../../public/img/x-mark-24.png" alt="x-icon" />
+          <img src="../../../public/img/x-mark-24.png" alt="x-icon" />
         </div>
       </div>
     </section>
   </transition>
 </template>
 
-<script>
-  import { usePokedexStore } from "../../store";
-  import { mapState, mapActions } from "pinia";
+<script setup>
+  import { usePokedexStore } from "../../../store";
+  import { storeToRefs } from "pinia";
+  import { computed, onBeforeMount } from "vue";
 
-  export default {
-    name: "pokemon-skills-modal",
+  const store = usePokedexStore();
+  const { getPokemon, show } = storeToRefs(store);
+  const { getPokemonsSkills, statusModal } = store;
 
-    data() {
-      return {
-        imgPokemon: (n, id) =>
-          "https://assets.pokemon.com/assets/cms2/img/pokedex/full/" +
-          n +
-          id +
-          ".png",
-      };
-    },
+  const getImgPokemon = computed(() => {
+    return getPokemon.value.sprites.other["official-artwork"].front_default;
+  });
 
-    computed: {
-      ...mapState(usePokedexStore, ["getPokemon", "show"]),
+  const getAbilities = computed(() => {
+    return getPokemon.value.abilities.filter((abi) => abi.ability);
+  });
 
-      getAbilities() {
-        return this.getPokemon.abilities.filter((abi) => abi.ability);
-      },
-      getTypes() {
-        return this.getPokemon.types.filter((types) => types.type);
-      },
-      getHeight(){
-        let height = this.getPokemon.height.toString()
-        if(height.length >= 1){
-          return height / 10
-        } else if (height.length > 2) {
-          return height / 100
-        }
-      },
-      getWeight(){
-        let weight = this.getPokemon.weight.toString()
-        if(weight.length > 1){
-          return weight / 10
-        } else if (weight.length > 2) {
-          return weight / 100
-        }
-      }
-    },
+  const getTypes = computed(() => {
+    return getPokemon.value.types.filter((types) => types.type);
+  });
 
-    async created() {
-      await this.getPokemonsSkills(this.getPokemon.id);
-    },
+  const getHeight = computed(() => {
+    let height = getPokemon.value.height.toString();
+    if (height.length >= 1) {
+      return height / 10;
+    } else if (height.length > 2) {
+      return height / 100;
+    }
+  });
 
-    methods: {
-      ...mapActions(usePokedexStore, ["getPokemonsSkills", "statusModal"]),
-    },
-  };
+  const getWeight = computed(() => {
+    let weight = getPokemon.value.weight.toString();
+    if (weight.length > 1) {
+      return weight / 10;
+    } else if (weight.length > 2) {
+      return weight / 100;
+    }
+  });
+
+  onBeforeMount(async () => {
+    try {
+      await getPokemonsSkills(getPokemon.value.id);
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
+  });
 </script>
 
 <style lang="scss" scoped>
@@ -183,7 +164,7 @@
         }
 
         &--abilities {
-          & div h3{
+          & div h3 {
             text-transform: capitalize;
           }
         }

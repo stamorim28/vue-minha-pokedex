@@ -8,6 +8,16 @@ module.exports = {
     },
   },
   configureWebpack: {
+    plugins: [
+      require("unplugin-vue-components/webpack")({
+        dirs: [
+          "src/components/atoms",
+          "src/components/bosons",
+          "src/components/molecules",
+          "src/components/organisms",
+        ],
+      }),
+    ],
     module: {
       rules: [
         {
