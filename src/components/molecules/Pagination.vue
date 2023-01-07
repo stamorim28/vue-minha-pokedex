@@ -10,54 +10,40 @@
   <slot v-if="loading" />
 </template>
 
-<script>
+<script setup>
   import { usePokedexStore } from "../../../store";
-  import { mapActions, mapState } from "pinia";
+  import { ref } from "vue";
+  import { storeToRefs } from "pinia";
 
-  export default {
-    name: "Pagination",
+  const search = ref("");
+  const loading = ref(false);
+  const store = usePokedexStore();
+  const { prev, next } = storeToRefs(store);
+  const { setPaginationPrev, setPaginationNext } = store;
 
-    data() {
-      return {
-        loading: false,
-      };
-    },
+  async function handlePrev() {
+    try {
+      loading.value = true;
+      await setPaginationPrev();
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    } finally {
+      loading.value = false;
+    }
+  }
 
-    computed: {
-      ...mapState(usePokedexStore, ["prev", "next"]),
-    },
-
-    methods: {
-      ...mapActions(usePokedexStore, [
-        "setPaginationPrev",
-        "setPaginationNext",
-      ]),
-
-      async handlePrev() {
-        try {
-          this.loading = !this.loading;
-          await this.setPaginationPrev();
-        } catch (error) {
-          alert(error);
-          console.log(error);
-        } finally {
-          this.loading = !this.loading;
-        }
-      },
-
-      async handleNext() {
-        try {
-          this.loading = !this.loading;
-          await this.setPaginationNext();
-        } catch (error) {
-          alert(error);
-          console.log(error);
-        } finally {
-          this.loading = !this.loading;
-        }
-      },
-    },
-  };
+  async function handleNext() {
+    try {
+      loading.value = true;
+      await setPaginationNext();
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    } finally {
+      loading.value = false;
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
