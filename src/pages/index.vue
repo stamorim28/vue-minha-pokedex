@@ -29,73 +29,28 @@
   </div>
 </template>
 
-<script>
+<script setup>
   import { usePokedexStore } from "../../store";
-  import { mapActions, mapState } from "pinia";
+  import { storeToRefs } from "pinia";
+  import { ref, onBeforeMount } from "vue";
 
-  export default {
-    name: "App",
+  const store = usePokedexStore();
+  const { show } = storeToRefs(store);
 
-    data() {
-      return {
-        loading: false,
-      };
-    },
+  const { fetchPokemons } = store;
+  const loading = ref(false);
 
-    async created() {
-      try {
-        this.loading = !this.loading;
-        await Promise.all([this.fetchPokemons()]);
-      } catch (error) {
-        alert(error);
-        console.log(error);
-      } finally {
-        this.loading = !this.loading;
-      }
-    },
-
-    computed: {
-      ...mapState(usePokedexStore, [
-        "getPokemon",
-        "counter",
-        "show",
-        "prev",
-        "next",
-      ]),
-    },
-
-    methods: {
-      ...mapActions(usePokedexStore, [
-        "fetchPokemons",
-        "setPaginationPrev",
-        "setPaginationNext",
-      ]),
-
-      async handlePrev() {
-        try {
-          this.loading = !this.loading;
-          await this.setPaginationPrev();
-        } catch (error) {
-          alert(error);
-          console.log(error);
-        } finally {
-          this.loading = !this.loading;
-        }
-      },
-
-      async handleNext() {
-        try {
-          this.loading = !this.loading;
-          await this.setPaginationNext();
-        } catch (error) {
-          alert(error);
-          console.log(error);
-        } finally {
-          this.loading = !this.loading;
-        }
-      },
-    },
-  };
+  onBeforeMount(async () => {
+    try {
+      loading.value = true;
+      await fetchPokemons();
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    } finally {
+      loading.value = false;
+    }
+  });
 </script>
 
 <style lang="scss">
