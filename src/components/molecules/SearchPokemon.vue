@@ -11,36 +11,30 @@
       Buscar
     </button>
   </div>
+  <Loading v-if="loading" />
 </template>
 
-<script>
+<script setup>
   import { usePokedexStore } from "../../../store";
-  import { mapActions } from "pinia";
+  import { ref } from "vue";
 
-  export default {
-    data() {
-      return {
-        search: "",
-      };
-    },
+  const search = ref("");
+  const loading = ref(false);
+  const store = usePokedexStore();
+  const { searchPokemons } = store;
 
-    methods: {
-      ...mapActions(usePokedexStore, ["searchPokemons"]),
-
-      async handleSearchPokemons(value) {
-        try {
-          this.loading = !this.loading;
-          await this.searchPokemons(value.toLowerCase());
-        } catch (error) {
-          alert(error);
-          console.log(error);
-        } finally {
-          this.search = "";
-          this.loading = !this.loading;
-        }
-      },
-    },
-  };
+  async function handleSearchPokemons(value) {
+    try {
+      loading.value = true;
+      await searchPokemons(value.toLowerCase());
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    } finally {
+      loading.value = false;
+      search.value = "";
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
