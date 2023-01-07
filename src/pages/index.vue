@@ -70,20 +70,6 @@
     width: 100%;
   }
 
-  .button-see-more {
-    background: $dark-black;
-    border: none;
-    padding: 0.5rem;
-    color: $white;
-    font-weight: bold;
-    cursor: pointer;
-
-    &:hover {
-      filter: drop-shadow(5px 5px $white);
-      transition: all ease 0.3s;
-    }
-  }
-
   @media (max-width: map-get($media-breakpoints, "sm")) {
     main {
       padding: 2rem 2.5%;
