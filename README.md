@@ -4,7 +4,7 @@
 
 Link - https://minha-pokedex-vue.netlify.app/
 
-Consumindo a <a href="https://pokeapi.co/" target="_blank">PokeAPI</a> e com imagens dos pokémons carregadas de forma dinâmica do <a href="https://www.pokemon.com/br/pokedex/" target="_blank">Site Oficial</a>, o projeto mostra todos os pokémons.
+Consumindo a <a href="https://pokeapi.co/" target="_blank">PokeAPI</a> e com imagens dos pokémons carregadas de forma dinâmica do <a href="https://www.pokemon.com/br/pokedex/" target="_blank">Site Oficial</a>, o projeto exibe todos os pokémons.
 
 <img width="850" src="https://raw.githubusercontent.com/stamorim28/minha-pokedex/master/pictures/print_1.png" alt="print"/>
 
