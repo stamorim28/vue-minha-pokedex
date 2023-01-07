@@ -1,7 +1,7 @@
 <template>
   <div class="bloco-pokemons" data-aos="fade-up" data-aos-duration="2000">
     <PokemonCard
-      v-for="pokemon in getPokemons"
+      v-for="pokemon in pokemonsSkills"
       :key="pokemon.data.name"
       @click="handleModal(pokemon.data)"
       :skills="pokemon.data"
@@ -9,28 +9,19 @@
   </div>
 </template>
 
-<script>
+<script setup>
   import { usePokedexStore } from "../../../store";
-  import { mapActions, mapState } from "pinia";
+  import { storeToRefs } from "pinia";
 
-  export default {
-    computed: {
-      ...mapState(usePokedexStore, ["pokemonsSkills"]),
+  const store = usePokedexStore();
+  const { pokemonsSkills } = storeToRefs(store);
 
-      getPokemons() {
-        return this.pokemonsSkills;
-      },
-    },
+  const { setPokemon, statusModal } = store;
 
-    methods: {
-      ...mapActions(usePokedexStore, ["setPokemon", "statusModal"]),
-
-      handleModal(poke) {
-        this.statusModal();
-        this.setPokemon(poke);
-      },
-    },
-  };
+  function handleModal(poke) {
+    statusModal();
+    setPokemon(poke);
+  }
 </script>
 
 <style lang="scss" scoped>
