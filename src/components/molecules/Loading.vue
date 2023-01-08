@@ -18,6 +18,7 @@
     justify-content: center;
     transform: translate(-50%, -50%);
     background-color: rgba($color: $black, $alpha: 0.5);
+    z-index: 5;
 
     /* Poké Styles */
     .pokeball {
