@@ -31,7 +31,7 @@ Consumindo a <a href="https://pokeapi.co/" target="_blank">PokeAPI</a> e com ima
 
 ## Linha do tempo de funcionalidades
 ### 2021
-- Listagem dos 150 pokémons iniciais.
+- Listagem dos 151 pokémons iniciais.
 - Busca por pokémons somente já carregados na rota.
 
 ### 2022
