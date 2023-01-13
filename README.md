@@ -36,7 +36,7 @@ Consumindo a <a href="https://pokeapi.co/" target="_blank">PokeAPI</a> e com ima
 
 ### 2022
 - [Paginação infinita com botão "ver mais".](https://github.com/stamorim28/vue-minha-pokedex/pull/5)
-- [Busca de pokémons por requisição.](https://github.com/stamorim28/vue-minha-pokedex/pull/8)
+- [Modal de exibição com detalhes do pokémon clicado.](https://github.com/stamorim28/vue-minha-pokedex/pull/3)
 
 ### 2023
 - [Paginação estilo previous e next, retornando ou carregando 25 pokémons por requisição dinâmica.](https://github.com/stamorim28/vue-minha-pokedex/pull/9)
