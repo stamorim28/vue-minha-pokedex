@@ -43,7 +43,7 @@
   onBeforeMount(async () => {
     try {
       loading.value = true;
-      await fetchPokemons();
+      await Promise.all([fetchPokemons()]);
     } catch (error) {
       alert(error);
       console.log(error);
